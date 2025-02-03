@@ -40,7 +40,7 @@ int main(int argc, char* argv[]) {
   PSQT::init();
   Bitboards::init();
   Position::init();
-  Bitbases::init();
+  // Bitbases::init();
   Search::init();
   Pawns::init();
   Threads.set(Options["Threads"]);

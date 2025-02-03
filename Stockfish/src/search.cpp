@@ -187,7 +187,7 @@ void Search::clear() {
   Time.availableNodes = 0;
   TT.clear();
   Threads.clear();
-  Tablebases::init(Options["SyzygyPath"]); // Free up mapped files
+//   Tablebases::init(Options["SyzygyPath"]); // Free up mapped files
 }
 
 
@@ -681,43 +681,43 @@ namespace {
             && !pos.can_castle(ANY_CASTLING))
         {
             TB::ProbeState err;
-            TB::WDLScore wdl = Tablebases::probe_wdl(pos, &err);
+            // TB::WDLScore wdl = Tablebases::probe_wdl(pos, &err);
 
             // Force check of time on the next occasion
             if (thisThread == Threads.main())
                 static_cast<MainThread*>(thisThread)->callsCnt = 0;
 
-            if (err != TB::ProbeState::FAIL)
-            {
-                thisThread->tbHits.fetch_add(1, std::memory_order_relaxed);
+            // if (err != TB::ProbeState::FAIL)
+            // {
+            //     thisThread->tbHits.fetch_add(1, std::memory_order_relaxed);
 
-                int drawScore = TB::UseRule50 ? 1 : 0;
+            //     int drawScore = TB::UseRule50 ? 1 : 0;
 
-                value =  wdl < -drawScore ? -VALUE_MATE + MAX_PLY + ss->ply + 1
-                       : wdl >  drawScore ?  VALUE_MATE - MAX_PLY - ss->ply - 1
-                                          :  VALUE_DRAW + 2 * wdl * drawScore;
+            //     value =  wdl < -drawScore ? -VALUE_MATE + MAX_PLY + ss->ply + 1
+            //            : wdl >  drawScore ?  VALUE_MATE - MAX_PLY - ss->ply - 1
+            //                               :  VALUE_DRAW + 2 * wdl * drawScore;
 
-                Bound b =  wdl < -drawScore ? BOUND_UPPER
-                         : wdl >  drawScore ? BOUND_LOWER : BOUND_EXACT;
+            //     Bound b =  wdl < -drawScore ? BOUND_UPPER
+            //              : wdl >  drawScore ? BOUND_LOWER : BOUND_EXACT;
 
-                if (    b == BOUND_EXACT
-                    || (b == BOUND_LOWER ? value >= beta : value <= alpha))
-                {
-                    tte->save(posKey, value_to_tt(value, ss->ply), b,
-                              std::min(DEPTH_MAX - ONE_PLY, depth + 6 * ONE_PLY),
-                              MOVE_NONE, VALUE_NONE);
+            //     if (    b == BOUND_EXACT
+            //         || (b == BOUND_LOWER ? value >= beta : value <= alpha))
+            //     {
+            //         tte->save(posKey, value_to_tt(value, ss->ply), b,
+            //                   std::min(DEPTH_MAX - ONE_PLY, depth + 6 * ONE_PLY),
+            //                   MOVE_NONE, VALUE_NONE);
 
-                    return value;
-                }
+            //         return value;
+            //     }
 
-                if (PvNode)
-                {
-                    if (b == BOUND_LOWER)
-                        bestValue = value, alpha = std::max(alpha, bestValue);
-                    else
-                        maxValue = value;
-                }
-            }
+            //     if (PvNode)
+            //     {
+            //         if (b == BOUND_LOWER)
+            //             bestValue = value, alpha = std::max(alpha, bestValue);
+            //         else
+            //             maxValue = value;
+            //     }
+            // }
         }
     }
 
