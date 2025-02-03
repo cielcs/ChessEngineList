@@ -119,13 +119,13 @@ void trans_alloc(trans_t * trans) {
 
    // calculate size
 
-   target = option_get_int("Hash");
-   if (target < 4) target = 16;
-   target *= 1024 * 1024;
+   // target = option_get_int("Hash");
+   // if (target < 4) target = 16;
+   // target *= 1024 * 1024;
+   target = 1 * 1024 * 1024; // 1 MB
 
    for (size = 1; size != 0 && size <= target; size *= 2)
       ;
-
    size /= 2;
    ASSERT(size>0&&size<=target);
 
@@ -140,8 +140,6 @@ void trans_alloc(trans_t * trans) {
    trans->table = (entry_t *) my_malloc(trans->size*sizeof(entry_t));
 
    trans_clear(trans);
-
-   ASSERT(trans_is_ok(trans));
 }
 
 // trans_free()
