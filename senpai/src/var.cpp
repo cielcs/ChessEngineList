@@ -28,7 +28,7 @@ void init() {
 
    set("Ponder", "false");
    set("Threads", "1");
-   set("Hash", "64");
+   set("Hash", "16");
    set("UCI_Chess960", "false");
 
    update();
