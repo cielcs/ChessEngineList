@@ -42,6 +42,7 @@ static void uci_loop ();
 // functions
 
 int main(int argc, char * argv[]) {
+   setbuf(stdout, NULL);
 
    std::string arg = "";
    if (argc > 1) arg = argv[1];
@@ -53,7 +54,7 @@ int main(int argc, char * argv[]) {
    pos::init();
    var::init();
 
-   listen_input();
+   // listen_input();　//
 
    var::update();
 
@@ -91,16 +92,22 @@ static void uci_loop() {
       } else if (command == "uci") {
 
          std::cout << "id name " << Engine_Name + " " + Engine_Version << std::endl;
+         std::cout.flush();
          std::cout << "id author " << "Fabien Letouzey" << std::endl;
+         std::cout.flush();
 
          std::cout << "option name " << "Hash" << " type spin default " << var::get("Hash") << " min 1 max 16384" << std::endl;
+         std::cout.flush();
          std::cout << "option name " << "Ponder" << " type check default " << var::get("Ponder") << std::endl;
+         std::cout.flush();
          std::cout << "option name " << "Threads" << " type spin default " << var::get("Threads") << " min 1 max 16" << std::endl;
+         std::cout.flush();
          std::cout << "option name " << "UCI_Chess960" << " type check default " << var::get("UCI_Chess960") << std::endl;
-
+         std::cout.flush();
          std::cout << "option name " << "Clear Hash" << " type button" << std::endl;
-
+         std::cout.flush();
          std::cout << "uciok" << std::endl;
+         std::cout.flush();
 
       } else if (command == "isready") {
 
@@ -115,6 +122,7 @@ static void uci_loop() {
          }
 
          std::cout << "readyok" << std::endl;
+         std::cout.flush();
 
       } else if (command == "setoption") {
 
@@ -292,6 +300,7 @@ static void uci_loop() {
          std::cout << "bestmove " << move::to_uci(move, game.pos());
          if (answer != move::None) std::cout << " ponder " << move::to_uci(answer, game.pos().succ(move));
          std::cout << std::endl;
+         std::cout.flush();
 
          si.init(); // reset level
 
