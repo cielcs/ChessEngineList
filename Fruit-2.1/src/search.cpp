@@ -257,10 +257,14 @@ void search() {
          ASSERT(!SearchRoot->change);
          SearchRoot->flag = true;
       }
+      double DynamicEarlyRatio = EarlyRatio; //付け加えた
+      if(SearchCurrent->speed >100000){
+         DynamicEarlyRatio *= 0.8;
+      }
 
       if (UseEarly
        && SearchInput->time_is_limited
-       && SearchCurrent->time >= SearchInput->time_limit_1 * EarlyRatio
+       && SearchCurrent->time >= SearchInput->time_limit_1 * DynamicEarlyRatio
        && !SearchRoot->bad_2
        && !SearchRoot->change) {
          SearchRoot->flag = true;

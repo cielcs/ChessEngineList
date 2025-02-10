@@ -23,7 +23,7 @@
 ### =========================================================================
 
 CC   = clang
-SRC  = *.c pyrrhic/tbprobe.c
+SRC  = search.c movegen.c evaluate.c uci.c
 LIBS = -lpthread -lm
 NN   = -DUSE_NNUE=0
 EXE  = Ethereal

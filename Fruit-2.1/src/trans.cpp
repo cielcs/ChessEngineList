@@ -135,7 +135,7 @@ void trans_alloc(trans_t * trans) {
    ASSERT(size!=0&&(size&(size-1))==0); // power of 2
 
    trans->size = size + (ClusterSize - 1); // HACK to avoid testing for end of table
-   trans->mask = size - 1;
+   trans->mask = (size - 1) & 0xFFFFF;  // 低ビットを無視し、衝突を減らすために使う
 
    trans->table = (entry_t *) my_malloc(trans->size*sizeof(entry_t));
 
